@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500&display=swap');
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+}
+
+.App {
+  text-align: center;
+}
+
+nav a {
+  color: black;
+  display: inline-block;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+nav a:hover {
+  color: red;
+}
