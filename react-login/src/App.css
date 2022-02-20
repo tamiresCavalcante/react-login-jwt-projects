@@ -19,3 +19,21 @@ nav a {
 nav a:hover {
   color: red;
 }
+
+input {
+  border:none;
+  font-size: 1.5rem;
+  background-color: rgba(128, 128, 128, 0.418);
+  font-family: inherit;
+  padding: 10px;
+}
+
+button {
+  font-size: 1.5rem;
+  border: none;
+  width: 100px;
+  font-family: inherit;
+  color: rgb(202, 28, 173);
+  padding: 10px;
+  background-color: black;
+}
