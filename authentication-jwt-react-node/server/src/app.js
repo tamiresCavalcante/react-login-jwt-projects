@@ -14,6 +14,7 @@ class App {
         this.server.use(express.json());
         this.server.use(cors());
     }
+    
 
     routes() {
         this.server.use(routes);
