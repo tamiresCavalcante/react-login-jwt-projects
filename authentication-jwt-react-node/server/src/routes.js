@@ -4,3 +4,5 @@ import HelloController from "./controllers/HelloController";
 const routes = new Router();
 
 roputes.get('/hello', HelloController.index);
+
+export default routes;
