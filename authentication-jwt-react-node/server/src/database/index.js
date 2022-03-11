@@ -7,7 +7,7 @@ class Database {
         this.connection = mongoose.connect(
             config.url,
             {
-                useNetUrlParser: true,
+                useNewUrlParser: true,
                 useUnifiedTopology: true,
             }
         );
