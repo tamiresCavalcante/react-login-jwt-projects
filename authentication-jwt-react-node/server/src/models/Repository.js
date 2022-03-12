@@ -11,7 +11,7 @@ const repositorySchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        useId: {
+        userId: {
             type: String,
             required: true,
         }

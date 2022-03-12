@@ -1,4 +1,5 @@
 import User from '../models/User';
+import { createPasswordHash } from '../services/auth';
 
 class UsersController {
     async index(req, res) {
@@ -11,7 +12,19 @@ class UsersController {
         }
     }
     async show(req, res) {
-        return res.json({ Users: 'world' });
+        try {
+            const { id } = req.params;
+            const user = await User.findById(id);
+
+            if (!user){
+                return res.status(404).json();
+            }
+            return res.json(user);
+
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
     }
     async create(req, res) {
         try {
@@ -24,17 +37,58 @@ class UsersController {
                     .status(422)
                     .json({ message: `User ${email} already exists.` });
             }
-            const newUser = await User.create({ email, password });
+
+            // criptografar o password
+            const encyptedPassword = await createPasswordHash(password);
+        
+
+            const newUser = await User.create({ 
+                email, 
+                password: encyptedPassword 
+            });
+
             return res.status(201).json(newUser);
+
         } catch(err){
 
         }
     }
     async update(req, res) {
-        return res.json({ Users: 'world' });
+        try {
+            const { id } = req.params;
+            const { email, password } = req.body;
+
+            const user = await User.findById(id);
+
+            if(!user){
+                return res.status(404).json();
+            }
+
+            await user.updateOne({ email, password });
+
+            return res.status(200).json();
+
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
     }
     async destroy(req, res) {
-        return res.json({ Users: 'world' });
+        try {
+            const { id } = req.params;
+            const user = await User.findById(id);
+
+            if(!user){
+                return res.status(404).json();
+            }
+
+            await user.deleteOne();
+            return res.status(200).json();
+
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
     }
 }
 
