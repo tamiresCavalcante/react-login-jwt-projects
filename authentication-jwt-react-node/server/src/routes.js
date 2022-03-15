@@ -7,7 +7,7 @@ import RepositoriesController from "./controllers/RepositoriesController";
 
 const routes = new Router();
 
-routes.use(auth);
+//routes.use(auth);
 
 routes.post('/sessions', SessionController.create);
 routes.get('/hello', HelloController.index);
@@ -23,6 +23,6 @@ routes.delete('/users/:id', UsersController.destroy);
 
 routes.get('/users/:user_id/repositories', RepositoriesController.index);
 routes.post('/users/:user_id/repositories', RepositoriesController.create);
-routes.delete('/users/:user_id/repositories', RepositoriesController.destroy);
+routes.delete('/users/:user_id/repositories/:id', RepositoriesController.destroy);
 
 export default routes;
