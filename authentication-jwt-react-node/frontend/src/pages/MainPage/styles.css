@@ -1,3 +1,11 @@
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 2rem;
+}
+
 #main .nav {
     display: flex;
     align-items: center;
@@ -66,3 +74,4 @@
 #main .repositories .item .name {
     font-size:  1.5rem;
 }
+

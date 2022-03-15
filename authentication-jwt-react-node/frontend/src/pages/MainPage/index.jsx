@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './styles.css';
 import Nav from './Nav';
 import Search from './Search';
 import Repositories from './Repositories';
-import { getRepositories } from '../../services/api';
+import { getRepositories, createRepository, destroyRepository } from '../../services/api';
 
 const MainPage = () => {
 
@@ -14,9 +15,10 @@ const MainPage = () => {
     const userId = '622ca48ddacf76a84069df4b';
     const loadData = async(query = '') => {
         try {
-            const response = await getRepositories(userId);
-            console.log(response.data);
+            const response = await getRepositories(userId, query);
             setRepositories(response.data);
+            console.log(response.data);
+            setLoading(false);
             
         } catch (error) {
             console.error(error);
@@ -33,15 +35,37 @@ const MainPage = () => {
     }
 
     const handleSearch = (query) => {
-        
+        loadData(query);
     }
 
-    const handleDeleteRepo = (repository) => {
-
+    const handleDeleteRepo = async (repository) => {
+        await destroyRepository(userId, repository._id);
+        await loadData();
     }
 
-    const handleNewRepo = (url) => {
+    const handleNewRepo = async (url) => {
+        try {
+            await createRepository(userId, url);
+            await loadData();
+        } catch (err) {
+            setLoadingError(true);
+        }
+    }
 
+    if(loadingError){
+        return (
+            <div className="loading">
+                Erro ao carregar os dados de repositório. <Link to="/login">Voltar</Link>
+            </div>
+        )
+    }
+
+    if(loading){
+        return (
+            <div className="loading">
+                Carregando
+            </div>
+        )
     }
 
     return (
