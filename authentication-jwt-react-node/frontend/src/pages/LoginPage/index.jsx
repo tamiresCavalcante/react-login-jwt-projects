@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createSession } from "../../services/api";
 import './styles.css';
 
 const LoginPage = () => {
@@ -6,8 +7,8 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
-
+    const handleLogin = async () => {
+        createSession();
     }
 
     return(
