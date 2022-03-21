@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../context/auth';
 import { Link } from 'react-router-dom';
 import './styles.css';
 import Nav from './Nav';
@@ -8,14 +9,14 @@ import { getRepositories, createRepository, destroyRepository } from '../../serv
 
 const MainPage = () => {
 
+    const { user, logout } = useContext(AuthContext);
     const [repositories, setRepositories] = useState('');
     const [loading, setLoading] = useState(true);
     const [loadingError, setLoadingError] = useState(false);
 
-    const userId = '622ca48ddacf76a84069df4b';
     const loadData = async(query = '') => {
         try {
-            const response = await getRepositories(userId, query);
+            const response = await getRepositories(user?.id, query);
             setRepositories(response.data);
             console.log(response.data);
             setLoading(false);
@@ -31,7 +32,7 @@ const MainPage = () => {
     }, []);
 
     const handleLogout = () => {
-
+        logout();
     }
 
     const handleSearch = (query) => {
@@ -39,13 +40,13 @@ const MainPage = () => {
     }
 
     const handleDeleteRepo = async (repository) => {
-        await destroyRepository(userId, repository._id);
+        await destroyRepository(user?.id, repository._id);
         await loadData();
     }
 
     const handleNewRepo = async (url) => {
         try {
-            await createRepository(userId, url);
+            await createRepository(user?.id, url);
             await loadData();
         } catch (err) {
             setLoadingError(true);
